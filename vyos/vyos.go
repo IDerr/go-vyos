@@ -22,6 +22,7 @@ const (
 	OPModeComment   OPMode = "comment"   // OPModeComment is the comment operational mode.
 	OPModeGenerate  OPMode = "generate"  // OPModeGenerate is the generate operational mode.
 	OPModeConfigure OPMode = "configure" // OPModeConfigure is the configure operational mode.
+	OPModeRenew     OPMode = "renew"     // OPModeRenew is the renew operational mode.
 )
 
 // Vyos represents a VyOS API client.
@@ -37,10 +38,11 @@ type Client struct {
 	common service // Reuse a single struct instead of allocating one for each service on the heap.
 
 	// Services used for talking to different parts of the VyOS API.
-	Show *ShowService
-	Conf *ConfigService
-	Gen  *GenerateService
-	Reset *ResetService
+	Show       *ShowService
+	Conf       *ConfigService
+	Gen        *GenerateService
+	Reset      *ResetService
+	Renew      *RenewService
 	Power      *PowerService
 	Image      *ImageService
 	ConfigFile *ConfigService
@@ -165,6 +167,7 @@ func (c *Client) init() {
 	c.Power = (*PowerService)(&c.common)
 	c.Image = (*ImageService)(&c.common)
 	c.Reset = (*ResetService)(&c.common)
+	c.Renew = (*RenewService)(&c.common)
 
 }
 
